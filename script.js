@@ -21,7 +21,24 @@ for (let i = 0; i < noi; i++) {
   imageUploadInput.addEventListener('change', function(event) {
     var selectedFile = event.target.files[0];
     if (selectedFile) {
-      console.log(`Selected file-${i}:`, selectedFile.name);
+      var formData = new FormData();
+      formData.append("imageFile", selectedFile);
+
+      // Perform AJAX request to upload file
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "saveIcon.php", true);
+      xhr.onload = function() {
+          if (xhr.status === 200) {
+              console.log(xhr.responseText);
+          } else {
+              console.log("Error uploading image!");
+          }
+      };
+      xhr.onerror = function() {
+          console.log("Error uploading image!");
+      };
+      xhr.send(formData);
+
     } else {
       console.log('No file selected');
     }
@@ -74,7 +91,7 @@ $(document).ready(() => {
     if(index > 0) {
       var html1 = $('.sub-menu').eq(index).html();
       var html2 = $('.sub-menu').eq(index - 1).html();
-      var result = window.confirm(`Chắc chắn đổi chỗ tiêu đề ${index} và ${index + 1}`);
+      var result = window.confirm(`Chắc chắn đổi chỗ tiêu đề ${index - 1} và ${index}`);
       if (result) {
         $('.sub-menu').eq(index - 1).html(html1);
         $('.sub-menu').eq(index).html(html2);
@@ -84,13 +101,32 @@ $(document).ready(() => {
     }
   })
   $("#down").click(() => {
-    console.log('down ', index);
+    if(index < noi - 1) {
+      var html1 = $('.sub-menu').eq(index).html();
+      var html2 = $('.sub-menu').eq(index + 1).html();
+      var result = window.confirm(`Chắc chắn đổi chỗ tiêu đề ${index} và ${index + 1}`);
+      if (result) {
+        $('.sub-menu').eq(index).html(html2);
+        $('.sub-menu').eq(index + 1).html(html1);
+        $("#leftside-navigation .sub-menu > a").off("click");
+        addEventForItem();
+      }
+    }
   })
   $("#delete").click(() => {
-    console.log('delete', index);
+    var result = window.confirm(`Chắc chắn xóa tiêu đề ${index}`);
+    if(result) {
+      $('.sub-menu').eq(index).remove();
+    }
   })
   $("#add").click(() => {
-    console.log('add', index);
+    var currentItem =  $('.sub-menu').eq(index); 
+    var clonedItem = currentItem.clone();
+    clonedItem.children("a").children("label").attr('for', 'image' + (++noi));
+    console.log(clonedItem.html());
+    currentItem.after(clonedItem);
+    $("#leftside-navigation .sub-menu > a").off("click");
+    addEventForItem();
   })
 
 
