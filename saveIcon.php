@@ -7,7 +7,7 @@ if(isset($_FILES["imageFile"]) && $_FILES["imageFile"]["error"] == 0){
     // Check file extension
     if(in_array($fileExtension, $allowedExtensions)){
         // Set destination directory
-        $uploadDir = "";
+        $uploadDir = "./img/";
         $uploadPath = $uploadDir . basename($_FILES["imageFile"]["name"]);
 
         // Move uploaded file to server
