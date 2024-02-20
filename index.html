@@ -1,129 +1,211 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>CodePen - Accordion Menu</title>
-  <link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'><link rel="stylesheet" href="./style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>CodePen - Accordion Menu</title>
+        <link
+            rel="stylesheet"
+            href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"
+        />
+        <link rel="stylesheet" href="./style.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    </head>
+    <body>
+        <!-- partial:index.partial.html -->
+        <aside class="sidebar">
+            <div id="leftside-navigation" class="nano">
+                <ul class="nano-content">
+                    <li class="sub-menu">
+                        <a>
+                            <label for="image1">
+                                <img
+                                    class="titleIcon iconTitle"
+                                    src="./img/list.png"
+                                />
+                                <input
+                                    type="file"
+                                    id="image1"
+                                    accept="image/*"
+                                />
+                            </label>
+                            <span class="title">Guitar Cơ Bản</span>
+                            <i class="arrow fa fa-angle-right pull-right"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a>Kiến thức cơ bản</a>
+                                <span style="margin-top: 10px">
+                                    <img
+                                        class="titleIcon up2"
+                                        src="./img/up.png"
+                                    />
+                                    <img
+                                        class="titleIcon down2"
+                                        src="./img/down.png"
+                                    />
+                                    <img
+                                        class="titleIcon delete2"
+                                        src="./img/delete.png"
+                                    />
+                                </span>
+                            </li>
+                            <li>
+                                <a>Luyện ngón cơ bản 1</a>
+                                <span style="margin-top: 10px">
+                                    <img
+                                        class="titleIcon up2"
+                                        src="./img/up.png"
+                                    />
+                                    <img
+                                        class="titleIcon"
+                                        src="./img/down.png"
+                                    />
+                                    <img
+                                        class="titleIcon"
+                                        src="./img/delete.png"
+                                    />
+                                </span>
+                            </li>
+                            <li>
+                                <a>Luyện ngón cơ bản</a>
+                                <span style="margin-top: 10px">
+                                    <img
+                                        class="titleIcon up2"
+                                        src="./img/up.png"
+                                    />
+                                    <img
+                                        class="titleIcon"
+                                        src="./img/down.png"
+                                    />
+                                    <img
+                                        class="titleIcon"
+                                        src="./img/delete.png"
+                                    />
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a>
+                            <label for="image2">
+                                <img
+                                    class="titleIcon iconTitle"
+                                    src="./img/list.png"
+                                />
+                                <input
+                                    type="file"
+                                    id="image2"
+                                    accept="image/*"
+                                />
+                            </label>
+                            <span class="title">Nhạc Lý</span>
+                            <i class="arrow fa fa-angle-right pull-right"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a>Kiến thức cơ bản</a>
+                                <span style="margin-top: 10px">
+                                    <img
+                                        class="titleIcon up2"
+                                        src="./img/up.png"
+                                    />
+                                    <img
+                                        class="titleIcon down2"
+                                        src="./img/down.png"
+                                    />
+                                    <img
+                                        class="titleIcon delete2"
+                                        src="./img/delete.png"
+                                    />
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a>
+                            <label for="image3">
+                                <img
+                                    class="titleIcon iconTitle"
+                                    src="./img/list.png"
+                                />
+                                <input
+                                    type="file"
+                                    id="image3"
+                                    accept="image/*"
+                                />
+                            </label>
+                            <span class="title">Guitar Nâng Cao</span>
+                            <i class="arrow fa fa-angle-right pull-right"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a>Kiến thức cơ bản</a>
+                                <span style="margin-top: 10px">
+                                    <img
+                                        class="titleIcon up2"
+                                        src="./img/up.png"
+                                    />
+                                    <img
+                                        class="titleIcon down2"
+                                        src="./img/down.png"
+                                    />
+                                    <img
+                                        class="titleIcon delete2"
+                                        src="./img/delete.png"
+                                    />
+                                </span>
+                            </li>
+                            <li>
+                                <a>Luyện ngón cơ bản</a>
+                                <span style="margin-top: 10px">
+                                    <img
+                                        class="titleIcon up2"
+                                        src="./img/up.png"
+                                    />
+                                    <img
+                                        class="titleIcon down2"
+                                        src="./img/down.png"
+                                    />
+                                    <img
+                                        class="titleIcon delete2"
+                                        src="./img/delete.png"
+                                    />
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                    <div class="context-menu" id="contextMenu">
+                        <div class="context-menu-item" id="up">
+                            Up<img class="titleIcon" src="./img/up.png" />
+                        </div>
+                        <div class="context-menu-item" id="down">
+                            Down<img class="titleIcon" src="./img/down.png" />
+                        </div>
+                        <div class="context-menu-item" id="delete">
+                            Delete<img
+                                class="titleIcon"
+                                src="./img/delete.png"
+                            />
+                        </div>
+                        <div class="context-menu-item" id="add">
+                            Add<img class="titleIcon" src="./img/list.png" />
+                        </div>
+                        <div class="context-menu-item" id="rename">
+                            Rename<img class="titleIcon" src="./img/edit.png" />
+                        </div>
+                    </div>
+                </ul>
 
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<aside class="sidebar">
-  <div id="leftside-navigation" class="nano">
-    <ul class="nano-content">
-      <li class="sub-menu">
-        <a>
-          <label for="image1">
-            <img class="titleIcon iconTitle" src="./img/list.png"/>
-            <input type="file" id="image1" accept="image/*">
-          </label>
-          Guitar Cơ Bản
-          <i class="arrow fa fa-angle-right pull-right"></i>
-        </a>
-        <ul>
-          <li>
-            <a>Kiến thức cơ bản</a>
-            <span style="margin-top: 10px;">
-              <img class="titleIcon" src="./img/up.png"/>
-              <img class="titleIcon" src="./img/down.png"/>
-              <img class="titleIcon" src="./img/delete.png"/>
-            </span>
-          </li>
-          <li>
-            <a>Luyện ngón cơ bản</a>
-            <span style="margin-top: 10px;">
-              <img class="titleIcon" src="./img/up.png"/>
-              <img class="titleIcon" src="./img/down.png"/>
-              <img class="titleIcon" src="./img/delete.png"/>
-            </span>
-          </li>    
-        </ul>
-      </li>
-      <li class="sub-menu">
-        <a>
-          <label for="image2">
-            <img class="titleIcon iconTitle" src="./img/list.png"/>
-            <input type="file" id="image2" accept="image/*">
-          </label>
-          Nhạc Lý
-          <i class="arrow fa fa-angle-right pull-right"></i>
-        </a>
-        <ul>
-          <li>
-            <a>Kiến thức cơ bản</a>
-            <span style="margin-top: 10px;">
-              <img class="titleIcon" src="./img/up.png"/>
-              <img class="titleIcon" src="./img/down.png"/>
-              <img class="titleIcon" src="./img/delete.png"/>
-            </span>
-          </li>
-          <li>
-            <a>Luyện ngón cơ bản</a>
-            <span style="margin-top: 10px;">
-              <img class="titleIcon" src="./img/up.png"/>
-              <img class="titleIcon" src="./img/down.png"/>
-              <img class="titleIcon" src="./img/delete.png"/>
-            </span>
-          </li>    
-        </ul>
-      </li>
-      <li class="sub-menu">
-        <a>
-          <label for="image3">
-            <img class="titleIcon iconTitle" src="./img/list.png"/>
-            <input type="file" id="image3" accept="image/*">
-          </label>
-          Guitar Nâng Cao
-          <i class="arrow fa fa-angle-right pull-right"></i>
-        </a>
-        <ul>
-          <li>
-            <a>Kiến thức cơ bản</a>
-            <span style="margin-top: 10px;">
-              <img class="titleIcon" src="./img/up.png"/>
-              <img class="titleIcon" src="./img/down.png"/>
-              <img class="titleIcon" src="./img/delete.png"/>
-            </span>
-          </li>
-          <li>
-            <a>Luyện ngón cơ bản</a>
-            <span style="margin-top: 10px;">
-              <img class="titleIcon" src="./img/up.png"/>
-              <img class="titleIcon" src="./img/down.png"/>
-              <img class="titleIcon" src="./img/delete.png"/>
-            </span>
-          </li>   
-        </ul>
-      </li>
-      <div class="context-menu" id="contextMenu">
-        <div class="context-menu-item" id="up">
-          Up<img class="titleIcon" src="./img/up.png"/>
-        </div>
-        <div class="context-menu-item" id="down">
-          Down<img class="titleIcon" src="./img/down.png"/>
-        </div>
-        <div class="context-menu-item" id="delete">
-          Delete<img class="titleIcon" src="./img/delete.png"/>
-        </div>
-        <div class="context-menu-item" id="add">
-          Add<img class="titleIcon" src="./img/list.png"/>
-        </div>
-    </div>
-    </ul>
-
-    <div style="width: 240px; text-align: center; margin-top: 10px;">
-      <span id="addItem" class="btn">Add item</span>
-      <span id="addItem" class="btn">Save</span>
-    </div>
-  </div>
-</aside>
-<div style="padding-left: 250px; color: aliceblue;">
-  Thỏ ngu
-</div>
-<!-- partial -->
-  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script><script  src="./script.js"></script>
-
-</body>
+                <div style="width: 240px; text-align: center; margin-top: 10px">
+                    <span id="addItem" class="btn">Add item</span>
+                    <span id="save" class="btn">Save</span>
+                </div>
+            </div>
+        </aside>
+        <div style="padding-left: 250px; color: aliceblue">Thỏ ngu</div>
+        <!-- partial -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+        <script src="./script.js"></script>
+    </body>
 </html>

@@ -151,3 +151,6 @@ input[type="file"] {
 .sub-menu li img {
   cursor: pointer;
 }
+#save {
+  background-color: rgb(19, 121, 255);
+}
