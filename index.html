@@ -24,6 +24,7 @@
                                 />
                                 <input
                                     type="file"
+                                    class="image"
                                     id="image1"
                                     accept="image/*"
                                 />
@@ -57,11 +58,11 @@
                                         src="./img/up.png"
                                     />
                                     <img
-                                        class="titleIcon"
+                                        class="titleIcon down2"
                                         src="./img/down.png"
                                     />
                                     <img
-                                        class="titleIcon"
+                                        class="titleIcon delete2"
                                         src="./img/delete.png"
                                     />
                                 </span>
@@ -74,11 +75,11 @@
                                         src="./img/up.png"
                                     />
                                     <img
-                                        class="titleIcon"
+                                        class="titleIcon down2"
                                         src="./img/down.png"
                                     />
                                     <img
-                                        class="titleIcon"
+                                        class="titleIcon delete2"
                                         src="./img/delete.png"
                                     />
                                 </span>
@@ -94,6 +95,7 @@
                                 />
                                 <input
                                     type="file"
+                                    class="image"
                                     id="image2"
                                     accept="image/*"
                                 />
@@ -130,6 +132,7 @@
                                 />
                                 <input
                                     type="file"
+                                    class="image"
                                     id="image3"
                                     accept="image/*"
                                 />
@@ -174,28 +177,24 @@
                             </li>
                         </ul>
                     </li>
-                    <div class="context-menu" id="contextMenu">
-                        <div class="context-menu-item" id="up">
-                            Up<img class="titleIcon" src="./img/up.png" />
-                        </div>
-                        <div class="context-menu-item" id="down">
-                            Down<img class="titleIcon" src="./img/down.png" />
-                        </div>
-                        <div class="context-menu-item" id="delete">
-                            Delete<img
-                                class="titleIcon"
-                                src="./img/delete.png"
-                            />
-                        </div>
-                        <div class="context-menu-item" id="add">
-                            Add<img class="titleIcon" src="./img/list.png" />
-                        </div>
-                        <div class="context-menu-item" id="rename">
-                            Rename<img class="titleIcon" src="./img/edit.png" />
-                        </div>
-                    </div>
                 </ul>
-
+                <div class="context-menu" id="contextMenu">
+                    <div class="context-menu-item" id="up">
+                        Up<img class="titleIcon" src="./img/up.png" />
+                    </div>
+                    <div class="context-menu-item" id="down">
+                        Down<img class="titleIcon" src="./img/down.png" />
+                    </div>
+                    <div class="context-menu-item" id="delete">
+                        Delete<img class="titleIcon" src="./img/delete.png" />
+                    </div>
+                    <div class="context-menu-item" id="add">
+                        Add<img class="titleIcon" src="./img/list.png" />
+                    </div>
+                    <div class="context-menu-item" id="rename">
+                        Rename<img class="titleIcon" src="./img/edit.png" />
+                    </div>
+                </div>
                 <div style="width: 240px; text-align: center; margin-top: 10px">
                     <span id="addItem" class="btn">Add item</span>
                     <span id="save" class="btn">Save</span>
