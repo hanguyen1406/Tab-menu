@@ -1,6 +1,6 @@
 var noi = $(".sub-menu").length;
 var index = 0;
-
+var changed = true;
 function removeAllEventListeners(element) {
     var newElement = element.cloneNode(true);
     element.outerHTML = newElement.outerHTML;
@@ -111,6 +111,23 @@ $(document).ready(() => {
             contextMenu.hide();
         }
     });
+    window.addEventListener("beforeunload", function (event) {
+        if (!changed) {
+            event.returnValue = "Đã thay đổi nội dung. Chắc chắn tải lại web?";
+        }
+    });
+    const targetNode = document.querySelector(".nano-content");
+
+    const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            $("#save").addClass("changed");
+            changed = false;
+        });
+    });
+
+    // Configure the MutationObserver to observe changes to the target div element
+    const config = { childList: true, subtree: true };
+    observer.observe(targetNode, config);
 
     $("#up").click(async () => {
         if (index > 0) {
@@ -158,7 +175,7 @@ $(document).ready(() => {
         var itemName = prompt(`Tên tiêu đề thêm mới:`);
         if (itemName) {
             $(".sub-menu").eq(index).children("ul").append(`
-            <li>
+            <li id="l${$(".sub-menu ul li").length + 1}">
                 <a>${itemName}</a>
                 <span style="margin-top: 10px">
                     <img class="titleIcon up2" src="./img/up.png" />

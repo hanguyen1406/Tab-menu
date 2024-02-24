@@ -1,156 +1,161 @@
-@import url('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css');
+@import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css");
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 300;
-  font-stretch: normal;
-  src: url(https://fonts.gstatic.com/s/opensans/v40/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsiH0B4gaVc.ttf) format('truetype');
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 300;
+    font-stretch: normal;
+    src: url(https://fonts.gstatic.com/s/opensans/v40/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsiH0B4gaVc.ttf)
+        format("truetype");
 }
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  font-stretch: normal;
-  src: url(https://fonts.gstatic.com/s/opensans/v40/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVc.ttf) format('truetype');
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-stretch: normal;
+    src: url(https://fonts.gstatic.com/s/opensans/v40/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVc.ttf)
+        format("truetype");
 }
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 700;
-  font-stretch: normal;
-  src: url(https://fonts.gstatic.com/s/opensans/v40/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsg-1x4gaVc.ttf) format('truetype');
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-stretch: normal;
+    src: url(https://fonts.gstatic.com/s/opensans/v40/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsg-1x4gaVc.ttf)
+        format("truetype");
 }
 body {
-  color: #5D5F63;
-  background: #293949;
-  font-family: 'Open Sans', sans-serif;
-  padding: 0;
-  margin: 0;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+    color: #5d5f63;
+    background: #293949;
+    font-family: "Open Sans", sans-serif;
+    padding: 0;
+    margin: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 .sidebar-toggle {
-  margin-left: -240px;
+    margin-left: -240px;
 }
 .sidebar {
-  width: 240px;
-  height: 100%;
-  background: #293949;
-  position: absolute;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  z-index: 100;
+    width: 240px;
+    height: 100%;
+    background: #293949;
+    position: absolute;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    z-index: 100;
 }
 .sidebar #leftside-navigation ul,
 .sidebar #leftside-navigation ul ul {
-  margin: -2px 0 0;
-  padding: 0;
+    margin: -2px 0 0;
+    padding: 0;
 }
 .sidebar #leftside-navigation ul li {
-  list-style-type: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    list-style-type: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 .sidebar #leftside-navigation ul li.active > a {
-  color: #1abc9c;
+    color: #1abc9c;
 }
 .sidebar #leftside-navigation ul li.active ul {
-  display: block;
+    display: block;
 }
 .sidebar #leftside-navigation ul li a {
-  color: #aeb2b7;
-  text-decoration: none;
-  display: block;
-  padding: 18px 0 18px 25px;
-  font-size: 12px;
-  outline: 0;
-  -webkit-transition: all 200ms ease-in;
-  -moz-transition: all 200ms ease-in;
-  -o-transition: all 200ms ease-in;
-  -ms-transition: all 200ms ease-in;
-  transition: all 200ms ease-in;
+    color: #aeb2b7;
+    text-decoration: none;
+    display: block;
+    padding: 18px 0 18px 25px;
+    font-size: 12px;
+    outline: 0;
+    -webkit-transition: all 200ms ease-in;
+    -moz-transition: all 200ms ease-in;
+    -o-transition: all 200ms ease-in;
+    -ms-transition: all 200ms ease-in;
+    transition: all 200ms ease-in;
 }
 .sidebar #leftside-navigation ul li a:hover {
-  color: #1abc9c;
+    color: #1abc9c;
 }
 .sidebar #leftside-navigation ul li a span {
-  display: inline-block;
+    display: inline-block;
 }
 .sidebar #leftside-navigation ul li a i {
-  width: 20px;
+    width: 20px;
 }
 .sidebar #leftside-navigation ul li a i .fa-angle-left,
 .sidebar #leftside-navigation ul li a i .fa-angle-right {
-  padding-top: 3px;
+    padding-top: 3px;
 }
 .sidebar #leftside-navigation ul ul {
-  display: none;
+    display: none;
 }
 .sidebar #leftside-navigation ul ul li {
-  background: #23313f;
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0;
-  border-bottom: none;
+    background: #23313f;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    border-bottom: none;
 }
 .sidebar #leftside-navigation ul ul li a {
-  font-size: 12px;
-  padding-top: 13px;
-  padding-bottom: 13px;
-  color: #aeb2b7;
+    font-size: 12px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    color: #aeb2b7;
 }
 a {
-  cursor: pointer;
+    cursor: pointer;
 }
 input[type="file"] {
-  display: none; /* Hide the original file input button */
+    display: none; /* Hide the original file input button */
 }
 .btn {
-  padding: 5px;
-  background-color: rgb(61, 158, 75);
-  border-radius: 5px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  cursor: pointer;
-  color: white;
+    padding: 5px;
+    background-color: rgb(61, 158, 75);
+    border-radius: 5px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    cursor: pointer;
+    color: white;
 }
 .iconTitle {
-  top: 6px;
+    top: 6px;
 }
 .titleIcon {
-  width: 17px;
-  position: relative;
-  margin: 2px;
-  border-radius: 50%;
+    width: 17px;
+    position: relative;
+    margin: 2px;
+    border-radius: 50%;
 }
 .context-menu {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  border-radius: 5px;
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
 }
 .context-menu-item {
-  padding: 8px 12px;
-  cursor: pointer;
-  justify-content: space-between;     
-  display: flex;
+    padding: 8px 12px;
+    cursor: pointer;
+    justify-content: space-between;
+    display: flex;
 }
 
 .context-menu-item:hover {
-  background-color: #f0f0f0;
+    background-color: #f0f0f0;
 }
 .sub-menu li {
-  display: flex;
-  justify-content: space-between;
-  
+    display: flex;
+    justify-content: space-between;
 }
 .sub-menu li img {
-  cursor: pointer;
+    cursor: pointer;
 }
 #save {
-  background-color: rgb(19, 121, 255);
+    background-color: rgb(19, 121, 255);
+}
+.changed {
+    background-color: red !important;
 }
