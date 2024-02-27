@@ -162,3 +162,8 @@ input[type="file"] {
 .sub-menu ul li {
     cursor: pointer;
 }
+.nano-content {
+    height: fit-content;
+    max-height: 92vh;
+    overflow-y: auto;
+}

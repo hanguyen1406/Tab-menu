@@ -127,9 +127,9 @@ function addEventTab() {
 
 addEventTab();
 // Hide the context menu when clicking outside of it
-document.addEventListener("click", () => {
-    contextMenu.style.display = "none";
-});
+// document.addEventListener("click", () => {
+//     contextMenu.style.display = "none";
+// });
 
 const deletedTab = (index) => {
     // console.log(`tab ${index} deleted`);

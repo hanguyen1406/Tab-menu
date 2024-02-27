@@ -98,7 +98,7 @@ div.tab > nav.tab-stripe::-webkit-scrollbar-thumb {
 div.tab > nav.tab-stripe > a {
     display: flex;
     align-items: center;
-    font-size: 24px;
+    /* font-size: 24px; */
     text-decoration: none;
     color: #000;
     letter-spacing: -2px; /* TMP */
@@ -190,8 +190,8 @@ div.tab:fullscreen > button.tab-full-screen-button {
 /* tab-content.css START */
 div.tab > div.tab-content {
     --tab-content-font-size: 18px;
-    font-family: "Google Sans", "Noto Sans Devanagari";
-    font-size: var(--tab-content-font-size);
+    /* font-family: "Google Sans", "Noto Sans Devanagari"; */
+    /* font-size: var(--tab-content-font-size); */
     /* Don't know why ↑ this is focusing when tabbing, causing layout shift */
     height: var(--tab-content-height);
     line-height: 1.4;
@@ -199,17 +199,17 @@ div.tab > div.tab-content {
 }
 @media (max-width: 321px) {
     div.tab > div.tab-content {
-        --tab-content-font-size: 17px;
+        /* --tab-content-font-size: 17px; */
     }
 }
 @media (min-width: 450px) {
     div.tab > div.tab-content {
-        --tab-content-font-size: 19px;
+        /* --tab-content-font-size: 19px; */
     }
 }
 @media (min-width: 800px) {
     div.tab > div.tab-content {
-        --tab-content-font-size: 20px;
+        /* --tab-content-font-size: 20px; */
     }
 }
 
@@ -301,7 +301,7 @@ div.tab ul {
 
 /* base.css START */
 :root {
-    --font: "Google Sans", "Noto Sans Devanagari";
+    /* --font: "Google Sans", "Noto Sans Devanagari"; */
 }
 
 *,
@@ -342,8 +342,8 @@ div.tab ul {
 }
 
 body {
-    font-family: var(--font);
-    font-size: 20px;
+    /* font-family: var(--font); */
+    /* font-size: 20px; */
     font-variant-numeric: tabular-nums;
     /* max-width: 1200px; */
     min-width: 291px;
@@ -351,7 +351,7 @@ body {
 }
 
 a {
-    color: #0050ff;
+    color: #ffffff;
 }
 
 :target {
@@ -364,7 +364,7 @@ h4 {
     margin-bottom: 30px;
 }
 code {
-    font-family: JetBrains Mono;
+    /* font-family: JetBrains Mono; */
     background-color: #dadada;
     padding: 0 6px;
     border-radius: 4px;
