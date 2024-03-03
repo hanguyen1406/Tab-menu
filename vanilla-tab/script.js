@@ -1,10 +1,18 @@
 // script for vanilla tab
-const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
-let current_active_tab = 0;
+// const $ = document.querySelector.bind(document);
+current_active_tab = 0;
 
-let currentTab = 0;
+currentTab = 0;
+advancedOptionButton = document.querySelectorAll(".adv-option-button");
+alignButtons = document.querySelectorAll(".align");
+spacingButtons = document.querySelectorAll(".spacing");
+formatButtons = document.querySelectorAll(".format");
+scriptButtons = document.querySelectorAll(".script");
 
+fontName = document.getElementById("fontName");
+fontSizeRef = document.getElementById("fontSize");
+writingArea = document.getElementById("text-input");
+linkButton = document.getElementById("createLink");
 function addEventTab() {
     $$("div.tab").forEach((x) => {
         const Tab_Stripe = x.querySelector(".tab-stripe");
@@ -131,7 +139,7 @@ addEventTab();
 //     contextMenu.style.display = "none";
 // });
 
-const deletedTab = (index) => {
+function deletedTab(index) {
     // console.log(`tab ${index} deleted`);
 
     const Tab_Stripe = document.querySelector(".tab-stripe");
@@ -154,7 +162,7 @@ const deletedTab = (index) => {
     }
 };
 
-const tabMoveLeft = (index) => {
+function tabMoveLeft(index) {
     const Tab_Content = document.querySelector(".tab-content");
     const Tab_Content_div = [...Tab_Content.children];
     let size = Tab_Content_div.length;
@@ -175,7 +183,7 @@ const tabMoveLeft = (index) => {
     }
 };
 
-const tabMoveRight = (index) => {
+function tabMoveRight(index) {
     const Tab_Stripe = document.querySelector(".tab-stripe");
     const Tab_Content = document.querySelector(".tab-content");
     const Tab_Stripe_a = [...Tab_Stripe.children];
@@ -251,7 +259,7 @@ function addTab(index) {
     addEventTab();
 }
 
-const saveVanillaTab = () => {
+function saveVanillaTab() {
     // Get all <style> elements in the <head>
     const styleElements = document.querySelectorAll("head style");
 
@@ -282,7 +290,7 @@ const saveVanillaTab = () => {
         });
 };
 
-const publishForUser = () => {
+function publishForUser () {
     var doc = document.cloneNode(true),
         textInput = [];
     //remove .container, atribute conteneditable, .context-menu, #excute
@@ -354,7 +362,7 @@ const publishForUser = () => {
     saveVanillaTab();
 };
 
-const exportTab = () => {
+function exportTab() {
     saveVanillaTab();
     const currentDate = new Date();
 
@@ -387,7 +395,7 @@ const exportTab = () => {
     }
 };
 
-const importTab = () => {
+function importTab() {
     // Create a hidden input element of type 'file'
     const fileInput = document.createElement("input");
     fileInput.type = "file";

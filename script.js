@@ -2,6 +2,37 @@ var noi = $(".sub-menu").length;
 var index = 0;
 var changed = true;
 var noli = $(".sub-menu ul li").length;
+//declare for vanilla tab
+const $$ = document.querySelectorAll.bind(document);
+let advancedOptionButton = null;
+let alignButtons = null;
+let spacingButtons = null;
+let formatButtons = null;
+let scriptButtons = null;
+
+let fontName = null;
+let fontSizeRef = null;
+let writingArea = null;
+let linkButton = null;
+let current_active_tab = 0;
+let currentTab = 0;
+let fontList = [
+    "Arial",
+    "Verdana",
+    "Times New Roman",
+    "Garamond",
+    "Georgia",
+    "Courier New",
+    "Cursive",
+];
+const intializer = () => {
+    highlighter(alignButtons, true);
+    highlighter(spacingButtons, true);
+    highlighter(formatButtons, false);
+    highlighter(scriptButtons, true);
+
+    fontSizeRef.value = 3;
+};
 function removeAllEventListeners(element) {
     var newElement = element.cloneNode(true);
     element.outerHTML = newElement.outerHTML;
@@ -65,6 +96,7 @@ function addEventForItem2() {
             listItem.insertBefore(prevListItem);
         }
     });
+
     $("#leftside-navigation .sub-menu ul li .down2").on("click", function (e) {
         // console.log(this);
         e.stopPropagation();
@@ -97,7 +129,7 @@ const testLog = (i) => {
 
 function handleContextMenu(event) {
     event.preventDefault();
-    var contextMenu = $("#contextMenu");
+    var contextMenu = $("#contextMenu1");
     index = $(".sub-menu").index($(this));
     contextMenu.css({
         display: "block",
@@ -109,11 +141,16 @@ function handleContextMenu(event) {
 function addEventOpenBook() {
     for (let i = 1; i <= noli; i++) {
         $(`#l${i}`).on("click", function (e) {
+            addEventOpenBook();
             fetch(`./htmlcode/${i}.json`)
                 .then((response) => response.json())
                 .then((json) => {
                     // console.log(json['index'])
-                    $("#book-body").html(`<a>${i}. ${$(this).children('a').html()}</a>${json["index"]}`);
+                    $("#book-body").html(
+                        `<a>${i}. ${$(this).children("a").html()}</a>${
+                            json["index"]
+                        }`
+                    );
                 });
         });
     }
@@ -125,10 +162,11 @@ $(document).ready(() => {
     addEventOpenBook();
     $(document).on("click", function (event) {
         event.stopPropagation();
-        var contextMenu = $("#contextMenu");
+        var contextMenu = $("#contextMenu1");
         if (!$(event.target).closest("#contextMenu").length) {
             contextMenu.hide();
         }
+        $("#contextMenu").hide();
     });
     window.addEventListener("beforeunload", function (event) {
         if (!changed) {
@@ -137,7 +175,8 @@ $(document).ready(() => {
                 "Data have been changed. Are you sure to reload?";
         }
     });
-    console.log(noli);
+    // console.log(noli);
+
     const targetNode = document.querySelector(".nano-content");
 
     const observer = new MutationObserver(function (mutations) {
@@ -146,10 +185,17 @@ $(document).ready(() => {
             changed = false;
         });
     });
+    const observer1 = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            // console.log("changed");
+            changed = false;
 
+        });
+    });
     // Configure the MutationObserver to observe changes to the target div element
     const config = { childList: true, subtree: true };
     observer.observe(targetNode, config);
+    observer1.observe(document.querySelector("#book-body"), config);
 
     $("#up").click(function (e) {
         e.preventDefault();
