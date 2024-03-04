@@ -1,6 +1,7 @@
 var noi = $(".sub-menu").length;
 var index = 0;
-var changed = true;
+var changed = true,
+    changedEbook = false;
 var noli = $(".sub-menu ul li").length;
 //declare for vanilla tab
 const $$ = document.querySelectorAll.bind(document);
@@ -119,6 +120,18 @@ function addEventForItem2() {
             }
         }
     );
+
+    $("#leftside-navigation .sub-menu ul li .rename2").on(
+        "click",
+        function (e) {
+            e.stopPropagation();
+            const text = $(this).closest("li").find("a");
+            var itemName = prompt(`Tên tiêu đề mới:`, text.text());
+            if (itemName) {
+                text.html(itemName);
+            }
+        }
+    );
 }
 
 // Add an event listener for when a file is selected
@@ -189,13 +202,11 @@ $(document).ready(() => {
         mutations.forEach(function (mutation) {
             // console.log("changed");
             changed = false;
-
         });
     });
     // Configure the MutationObserver to observe changes to the target div element
     const config = { childList: true, subtree: true };
     observer.observe(targetNode, config);
-    observer1.observe(document.querySelector("#book-body"), config);
 
     $("#up").click(function (e) {
         e.preventDefault();

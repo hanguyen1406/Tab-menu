@@ -103,6 +103,10 @@ body {
     padding-top: 13px;
     padding-bottom: 13px;
     color: #aeb2b7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 120px;
 }
 a {
     cursor: pointer;
@@ -124,7 +128,7 @@ input[type="file"] {
 .titleIcon {
     width: 17px;
     position: relative;
-    margin: 2px;
+    margin: 1px;
     border-radius: 50%;
 }
 .context-menu {
