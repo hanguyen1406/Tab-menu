@@ -2,7 +2,9 @@ var noi = $(".sub-menu").length;
 var index = 0;
 var changed = true,
     changedEbook = false;
-var noli = $(".sub-menu ul li").length;
+
+var noli;
+
 //declare for vanilla tab
 const $$ = document.querySelectorAll.bind(document);
 let advancedOptionButton = null;
@@ -34,6 +36,20 @@ const intializer = () => {
 
     fontSizeRef.value = 3;
 };
+const targetNode = document.querySelector(".nano-content");
+const observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+        $("#save").addClass("changed");
+        changed = false;
+    });
+});
+const observer1 = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+        console.log("changed");
+        changed = false;
+    });
+});
+const config = { childList: true, subtree: true };
 function removeAllEventListeners(element) {
     var newElement = element.cloneNode(true);
     element.outerHTML = newElement.outerHTML;
@@ -153,26 +169,44 @@ function handleContextMenu(event) {
 
 function addEventOpenBook() {
     for (let i = 1; i <= noli; i++) {
-        $(`#l${i}`).on("click", function (e) {
-            addEventOpenBook();
-            fetch(`./htmlcode/${i}.json`)
-                .then((response) => response.json())
-                .then((json) => {
-                    // console.log(json['index'])
-                    $("#book-body").html(
-                        `<a>${i}. ${$(this).children("a").html()}</a>${
-                            json["index"]
-                        }`
-                    );
-                });
-        });
+        $(".sub-menu ul li")
+            .eq(i - 1)
+            .on("click", function (e) {
+                try {
+                    fetch(`./htmlcode/${i}.json`)
+                        .then((response) => response.json())
+                        .then((json) => {
+                            // console.log(json['index'])
+                            $("#book-body").html(
+                                `<a>${i}. ${$(this).children("a").html()}</a>${
+                                    json["index"]
+                                }`
+                            );
+                        });
+                } catch (error) {
+                    console.log("Khong co ebook nay");
+                }
+            });
     }
 }
 
+(async () => {
+    try {
+        const response = await fetch("./htmlcode/config.json");
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        const json = await response.json();
+        window.noli = json["noli"]; // Assign noli variable to global scope
+        console.log(noli); // Log the fetched data
+        addEventOpenBook();
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+})();
 $(document).ready(() => {
     $(document).on("contextmenu", ".sub-menu", handleContextMenu);
     addEventForItem();
-    addEventOpenBook();
     $(document).on("click", function (event) {
         event.stopPropagation();
         var contextMenu = $("#contextMenu1");
@@ -190,23 +224,8 @@ $(document).ready(() => {
     });
     // console.log(noli);
 
-    const targetNode = document.querySelector(".nano-content");
-
-    const observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            $("#save").addClass("changed");
-            changed = false;
-        });
-    });
-    const observer1 = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            // console.log("changed");
-            changed = false;
-        });
-    });
-    // Configure the MutationObserver to observe changes to the target div element
-    const config = { childList: true, subtree: true };
     observer.observe(targetNode, config);
+    observer1.observe(document.querySelector("#book-body"), config);
 
     $("#up").click(function (e) {
         e.preventDefault();
@@ -258,14 +277,19 @@ $(document).ready(() => {
         var itemName = prompt(`Tên tiêu đề thêm mới:`);
         if (itemName) {
             noli++;
+            //save current noli to sever
             $(".sub-menu").eq(index).children("ul").append(`
-            <li id="l${$(".sub-menu ul li").length + 1}">
-                <a>${itemName}</a>
+            <li id="l${noli}">
+                <a title="${itemName}">${itemName}</a>
                 <span style="margin-top: 10px">
                     <img class="titleIcon up2" src="./img/up.png" />
                     <img
                         class="titleIcon down2"
                         src="./img/down.png"
+                    />
+                    <img
+                        class="titleIcon rename2"
+                        src="./img/edit.png"
                     />
                     <img
                         class="titleIcon delete2"
@@ -300,12 +324,13 @@ $(document).ready(() => {
                             src="./img/list.png"
                         />
                         <input
+                            class="image"
                             type="file"
                             id="image${noi}"
                             accept="image/*"
                         />
                     </label>
-                    <span class="title">${userInput}</span>
+                    <span title="${userInput}" class="title">${userInput}</span>
                     <i class="arrow fa fa-angle-right pull-right"></i>
                 </a>
                 <ul></ul>
