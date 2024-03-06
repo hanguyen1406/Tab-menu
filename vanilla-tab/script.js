@@ -260,34 +260,24 @@ function addTab(index) {
 }
 
 function saveVanillaTab() {
-    // Get all <style> elements in the <head>
-    const styleElements = document.querySelectorAll("head style");
-
-    // Remove each <style> element
-    styleElements.forEach((styleElement) => {
-        styleElement.parentNode.removeChild(styleElement);
-    });
-    document.querySelectorAll(".tab-content img").forEach((img) => {
-        img.style.width = "100%";
-    });
-    var data = document.documentElement.outerHTML;
-    // console.log(data);
-    // Create a POST request to the server
-    fetch("saveData.php", {
-        method: "POST",
-        body: data,
-        headers: {
-            "Content-Type": "text/plain",
-        },
-    })
-        .then((response) => response.text())
-        .then((result) => {
-            console.log(result);
-            alert("Saved");
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
+    //remove a element
+    var data = $("#book-body").html();
+    console.log(data);
+    // fetch("saveData.php", {
+    //     method: "POST",
+    //     body: data,
+    //     headers: {
+    //         "Content-Type": "text/plain",
+    //     },
+    // })
+    //     .then((response) => response.text())
+    //     .then((result) => {
+    //         console.log(result);
+    //         alert("Saved");
+    //     })
+    //     .catch((error) => {
+    //         console.error("Error:", error);
+    //     });
 };
 
 function publishForUser () {

@@ -6,7 +6,7 @@ var changed = true,
 var noli;
 
 //declare for vanilla tab
-const $$ = document.querySelectorAll.bind(document);
+var $$ = document.querySelectorAll.bind(document);
 let advancedOptionButton = null;
 let alignButtons = null;
 let spacingButtons = null;
@@ -88,6 +88,7 @@ const addEventForItem = async () => {
                         $(".iconTitle")
                             .eq(index)
                             .attr("src", `./img/${selectedFile.name}`);
+                        saveBody();
                     } else {
                         console.log("Error uploading image!");
                     }
@@ -146,6 +147,7 @@ function addEventForItem2() {
             var itemName = prompt(`Tên tiêu đề mới:`, text.text());
             if (itemName) {
                 text.html(itemName);
+                text.attr("title", itemName);
             }
         }
     );
@@ -211,9 +213,11 @@ function saveBody() {
     changed = true;
     var htmlContent = $("html").html();
     $("#save").removeClass("changed");
+    $("#book-body").html("Chọn sách cần sửa");
     $("style").remove();
     $("head").append(
-        `<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/><link rel="stylesheet" href="./style.css" />`
+        `<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/>
+        <link rel="stylesheet" href="./style.css" />`
     );
     var htmlContent = document.documentElement.outerHTML;
     fetch("saveBody.php", {
@@ -275,6 +279,7 @@ $(document).ready(() => {
                     .html(html1);
                 $(".sub-menu").eq(index).html(html2);
                 addEventForItem();
+                addEventOpenBook();
             }
         }
     });
@@ -294,6 +299,7 @@ $(document).ready(() => {
                     .eq(index + 1)
                     .html(html1);
                 addEventForItem();
+                addEventOpenBook();
             }
         }
     });
@@ -367,6 +373,7 @@ $(document).ready(() => {
 
         if (userInput !== null) {
             $(".title").eq(index).html(userInput);
+            $(".title").eq(index).attr("title", userInput);
         }
     });
     $("#addItem").click(() => {
@@ -401,6 +408,7 @@ $(document).ready(() => {
         if ($("#save").hasClass("changed")) {
             saveBody();
             alert("Lưu data mới thành công!");
+            location.reload();
         } else {
             alert("Chưa chỉnh sửa data!");
         }
