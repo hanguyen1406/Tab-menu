@@ -46,6 +46,7 @@ const observer = new MutationObserver(function (mutations) {
 const observer1 = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
         console.log("changed");
+        $("#save").addClass("changed");
         changed = false;
     });
 });
@@ -171,9 +172,9 @@ function addEventOpenBook() {
     for (let i = 1; i <= noli; i++) {
         $(".sub-menu ul li")
             .eq(i - 1)
-            .on("click", function (e) {
+            .on("click", async function (e) {
                 try {
-                    fetch(`./htmlcode/${i}.json`)
+                    await fetch(`./htmlcode/${i}.json`)
                         .then((response) => response.json())
                         .then((json) => {
                             // console.log(json['index'])
@@ -186,6 +187,8 @@ function addEventOpenBook() {
                 } catch (error) {
                     console.log("Khong co ebook nay");
                 }
+                var tabct = document.querySelector(".tab-content");
+                observer1.observe(tabct, config);
             });
     }
 }
@@ -225,7 +228,6 @@ $(document).ready(() => {
     // console.log(noli);
 
     observer.observe(targetNode, config);
-    observer1.observe(document.querySelector("#book-body"), config);
 
     $("#up").click(function (e) {
         e.preventDefault();
