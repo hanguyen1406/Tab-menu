@@ -160,7 +160,7 @@ function deletedTab(index) {
         }
         Tab_Content_div[size - 1].remove();
     }
-};
+}
 
 function tabMoveLeft(index) {
     const Tab_Content = document.querySelector(".tab-content");
@@ -181,7 +181,7 @@ function tabMoveLeft(index) {
             ];
         }
     }
-};
+}
 
 function tabMoveRight(index) {
     const Tab_Stripe = document.querySelector(".tab-stripe");
@@ -204,7 +204,7 @@ function tabMoveRight(index) {
             ];
         }
     }
-};
+}
 
 // Log the name of the clicked item when a context menu item is clicked
 document.querySelectorAll(".context-menu-item").forEach((item) => {
@@ -261,26 +261,28 @@ function addTab(index) {
 
 function saveVanillaTab() {
     //remove a element
-    var data = $("#book-body").html();
-    console.log(data);
-    // fetch("saveData.php", {
-    //     method: "POST",
-    //     body: data,
-    //     headers: {
-    //         "Content-Type": "text/plain",
-    //     },
-    // })
-    //     .then((response) => response.text())
-    //     .then((result) => {
-    //         console.log(result);
-    //         alert("Saved");
-    //     })
-    //     .catch((error) => {
-    //         console.error("Error:", error);
-    //     });
-};
+    var data = {
+        index: currentEbook,
+        data: $("#book-body").html(),
+    };
+    fetch("../saveEbook.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        .then((response) => response.text())
+        .then((result) => {
+            console.log(result);
+            alert("Saved");
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+}
 
-function publishForUser () {
+function publishForUser() {
     var doc = document.cloneNode(true),
         textInput = [];
     //remove .container, atribute conteneditable, .context-menu, #excute
@@ -350,7 +352,7 @@ function publishForUser () {
             console.error("Error:", error);
         });
     saveVanillaTab();
-};
+}
 
 function exportTab() {
     saveVanillaTab();
@@ -383,7 +385,7 @@ function exportTab() {
                 console.error("Error:", error);
             });
     }
-};
+}
 
 function importTab() {
     // Create a hidden input element of type 'file'
@@ -435,4 +437,4 @@ function importTab() {
         fileInput.remove();
         location.reload();
     });
-};
+}

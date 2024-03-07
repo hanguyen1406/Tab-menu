@@ -4,7 +4,7 @@ var changed = true,
     changedEbook = false;
 
 var noli;
-
+var currentEbook;
 //declare for vanilla tab
 var $$ = document.querySelectorAll.bind(document);
 let advancedOptionButton = null;
@@ -174,7 +174,8 @@ function addEventOpenBook() {
     $(".sub-menu ul li").each((i, e) => {
         $(e).on("click", async function (e) {
             try {
-                var id = $(this).attr("id").slice(1);
+                currentEbook = $(this).attr("id").slice(1);
+                var id = currentEbook;
                 await fetch(`./htmlcode/${id}.json`)
                     .then((response) => response.json())
                     .then((json) => {
