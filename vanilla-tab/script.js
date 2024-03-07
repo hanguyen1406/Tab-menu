@@ -261,11 +261,15 @@ function addTab(index) {
 
 function saveVanillaTab() {
     //remove a element
+    var fc = $("#book-body > :first-child").html();
+    $("#book-body > :first-child").remove();
     var data = {
         index: currentEbook,
-        data: $("#book-body").html(),
+        data: {
+            index: $("#book-body").html(),
+        },
     };
-    fetch("../saveEbook.php", {
+    fetch("./saveEbook.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -276,6 +280,7 @@ function saveVanillaTab() {
         .then((result) => {
             console.log(result);
             alert("Saved");
+            $("#book-body").prepend(`<a>${fc}</a>`);
         })
         .catch((error) => {
             console.error("Error:", error);

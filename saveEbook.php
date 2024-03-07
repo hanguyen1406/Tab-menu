@@ -8,7 +8,7 @@ $filePath = "htmlcode/".($index).".json";
 $file = fopen($filePath, "w");
 
 if ($file) {
-    fwrite($filePath, $data['data']);
+    fwrite($file, json_encode($data['data']));
     fclose($file);
     echo "Save ebook ".$index." successfully.";
 } else {
