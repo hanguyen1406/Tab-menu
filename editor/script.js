@@ -211,9 +211,9 @@ function addEventOpenBook() {
 })();
 
 async function saveBody() {
+    var htmlContent = $("html").html();
     changed = true;
     $("#save").removeClass("changed");
-    var htmlContent = $("html").html();
     $("#book-body").html("Chọn sách cần sửa");
     $("style").remove();
     $("head").append(

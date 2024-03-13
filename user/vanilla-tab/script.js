@@ -289,35 +289,76 @@ async function saveVanillaTab() {
         });
 }
 
-async function publishForUser() {
-    await saveVanillaTab();
-    var doc = document.querySelector("#book-body").cloneNode(true);
-    doc.firstChild.remove();
-    doc.querySelector(".container").remove();
-    doc.querySelector("#excute").remove();
-    console.log(doc);
+function publishForUser() {
+    var doc = document.cloneNode(true),
+        textInput = [];
+    //remove .container, atribute conteneditable, .context-menu, #excute
 
-    var data = {
-        index: currentEbook,
-        data: {
-            index: doc.innerHTML,
-        },
-    };
-    await fetch("./publish.php", {
+    doc.querySelector(".container").remove();
+    doc.querySelector(".context-menu").remove();
+    doc.querySelector("#excute").remove();
+    doc.querySelectorAll("#text-input").forEach((value, index) => {
+        value.removeAttribute("contenteditable");
+        textInput.push(value.innerHTML);
+        if (index > 1) {
+            var title = value.querySelector("b");
+            if (title) {
+                value.innerHTML = title.outerHTML + "<br>";
+                var loader = document.createElement("a");
+                loader.href = "#";
+                loader.id = "tittle";
+                loader.innerHTML = "<b>Click để tải nội dung.</b>";
+                value.appendChild(loader);
+            }
+        }
+    });
+
+    //prepare for floating icon
+    var wrapper = document.createElement("div");
+    doc.querySelector(".tab").appendChild(wrapper);
+    wrapper.outerHTML = `<div class="wrapper">
+        <link href="./floating.css" rel="stylesheet" />
+        <input type="checkbox" />
+        <div class="fab"></div>
+        <div class="fac">
+            <a id="pdf" href="#"><i class="fas fa-file-pdf"></i></a>
+        </div>
+    </div>`;
+
+    // Create a new script element
+    const scriptElement = document.createElement("script");
+    const scriptElement2 = document.createElement("script");
+
+    // Set the src attribute to "./floating.js"
+    scriptElement.src = "./floating.js";
+    scriptElement2.src = "./pdf-lib.min.js";
+
+    // Append the script element to the <body>
+    doc.body.appendChild(scriptElement2);
+    doc.body.appendChild(scriptElement);
+
+    // var data = doc.querySelector("html").innerHTML;
+    var data = doc.documentElement.outerHTML;
+
+    fetch("publishUser.php", {
         method: "POST",
+        body: JSON.stringify({
+            data: data,
+            textInput: textInput,
+        }),
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
     })
         .then((response) => response.text())
         .then((result) => {
             console.log(result);
-            alert("published");
+            alert("Published");
         })
         .catch((error) => {
             console.error("Error:", error);
         });
+    saveVanillaTab();
 }
 
 async function exportTab() {

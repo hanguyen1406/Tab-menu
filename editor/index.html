@@ -1,4 +1,4 @@
-<html lang="en" class=" -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit-"><head>
+<html lang="en" class=" -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit- -webkit-"><head>
         <meta charset="UTF-8">
         <title>CodePen - Accordion Menu</title>
         
@@ -21,7 +21,12 @@
         
         
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script><link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js?_=1710253256965"></script><script async="" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js?_=1710253256966"></script><script async="" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js?_=1710253256967"></script><script async="" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js?_=1710253256970"></script><script async="" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js?_=1710253256971"></script><script async="" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js?_=1710253256972"></script>
+        
+        
+        
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="./style.css"></head>
     <body data-new-gr-c-s-check-loaded="14.1157.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1157.0">
         <!-- partial:index.partial.html -->
@@ -31,13 +36,13 @@
                     <li class="sub-menu">
                         <a>
                             <label for="image3">
-                                <img class="titleIcon iconTitle" src="./img/mat_sau.jpg">
+                                <img class="titleIcon iconTitle" src="./img/a.jpg">
                                 <input type="file" class="image" id="image3" accept="image/*">
                             </label>
                             <span title="Guitar Nâng Cao" class="title">Guitar Nâng Cao</span>
                             <i class="arrow fa fa-angle-right pull-right"></i>
                         </a>
-                        <ul style="display: block;">
+                        <ul style="display: none;">
                             <li id="l5">
                                 <a title="Kiến thức cơ bản 1">Kiến thức cơ bản 1</a>
                                 <span style="margin-top: 10px">
@@ -46,7 +51,8 @@
                                     <img class="titleIcon rename2" src="./img/edit.png">
                                     <img class="titleIcon delete2" src="./img/delete.png">
                                 </span>
-                            </li><li id="l6">
+                            </li>
+                            <li id="l6">
                                 <a title="Luyện ngón cơ bản">Luyện ngón cơ bản</a>
                                 <span style="margin-top: 10px">
                                     <img class="titleIcon up2" src="./img/up.png">
@@ -118,8 +124,29 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
-                <div class="context-menu" id="contextMenu1" style="display: none; left: 115px; top: 40px;">
+                
+            <li class="sub-menu">
+                <a>
+                    <label for="image4">
+                        <img class="titleIcon iconTitle" src="./img/list.png">
+                        <input class="image" type="file" id="image4" accept="image/*">
+                    </label>
+                    <span title="Test tiêu đề" class="title">Test tiêu đề</span>
+                    <i class="arrow fa fa-angle-right pull-right"></i>
+                </a>
+                <ul style="display: none;">
+            <li id="l7">
+                <a title="Nhạc lý nâng cao">Nhạc lý nâng cao</a>
+                <span style="margin-top: 10px">
+                    <img class="titleIcon up2" src="./img/up.png">
+                    <img class="titleIcon down2" src="./img/down.png">
+                    <img class="titleIcon rename2" src="./img/edit.png">
+                    <img class="titleIcon delete2" src="./img/delete.png">
+                </span>
+            </li></ul>
+            </li>
+            </ul>
+                <div class="context-menu" id="contextMenu1" style="display: none; left: 148px; top: 213px;">
                     <div class="context-menu-item" id="up">
                         Up<img class="titleIcon" src="./img/up.png">
                     </div>
