@@ -210,10 +210,10 @@ function addEventOpenBook() {
     }
 })();
 
-function saveBody() {
+async function saveBody() {
     changed = true;
-    var htmlContent = $("html").html();
     $("#save").removeClass("changed");
+    var htmlContent = $("html").html();
     $("#book-body").html("Chọn sách cần sửa");
     $("style").remove();
     $("head").append(
@@ -221,7 +221,7 @@ function saveBody() {
         <link rel="stylesheet" href="./style.css" />`
     );
     var htmlContent = document.documentElement.outerHTML;
-    fetch("saveBody.php", {
+    await fetch("saveBody.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",

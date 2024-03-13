@@ -259,8 +259,9 @@ function addTab(index) {
     addEventTab();
 }
 
-function saveVanillaTab() {
+async function saveVanillaTab() {
     //remove a element
+    await saveBody();
     var fc = $("#book-body > :first-child").html();
     $("#book-body > :first-child").remove();
     var data = {
@@ -269,7 +270,7 @@ function saveVanillaTab() {
             index: $("#book-body").html(),
         },
     };
-    fetch("./saveEbook.php", {
+    await fetch("./saveEbook.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -359,8 +360,8 @@ function publishForUser() {
     saveVanillaTab();
 }
 
-function exportTab() {
-    saveVanillaTab();
+async function exportTab() {
+    // saveVanillaTab();
     const currentDate = new Date();
 
     // Get the various components of the date and time
@@ -372,24 +373,35 @@ function exportTab() {
     const second = currentDate.getSeconds();
     var version = `${hour}${minute}${second}_${day}${month}${year}`;
 
-    if (confirm(`Xuất version: ${version} ra file json`)) {
-        fetch("exportData.php")
-            .then((response) => response.text())
-            .then((code) => {
-                const blob = new Blob([code], { type: "application/json" });
-                const url = URL.createObjectURL(blob);
+    await saveVanillaTab();
+    // console.log(currentEbook);
+    var fileUrl = `htmlcode/${currentEbook}.json`;
+    fetch(fileUrl)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            //console.log(data);
+            var jsonString = JSON.stringify(data);
+            var blob = new Blob([jsonString], { type: "application/json" });
+            var url = URL.createObjectURL(blob);
+            var link = document.createElement("a");
+            link.href = url;
+            link.download = version + ".json";
 
-                const a = document.createElement("a");
-                a.href = url;
-                // const jsonCode = JSON.stringify({ code: code });
-                a.download = `ebook_${version}.json`;
-                a.click();
-                URL.revokeObjectURL(url);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-    }
+            document.body.appendChild(link);
+
+            link.click();
+        })
+        .catch((error) => {
+            console.error(
+                "There was a problem with the fetch operation:",
+                error
+            );
+        });
 }
 
 function importTab() {
@@ -410,22 +422,13 @@ function importTab() {
                 reader.onload = function (event) {
                     try {
                         const jsonData = JSON.parse(event.target.result);
-                        console.log("JSON Data:", jsonData);
+                        var fc = $("#book-body > :first-child").html();
 
-                        fetch("importData.php", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(jsonData),
-                        })
-                            .then((response) => response.json())
-                            .then((data) => {
-                                console.log(data.message);
-                            })
-                            .catch((error) => {
-                                console.error("Error:", error);
-                            });
+                        $("#book-body").html(jsonData["index"]);
+                        $("#book-body").prepend(`<a>${fc}</a>`);
+
+                        $("#save").addClass("changed");
+                        changed = false;
                     } catch (error) {
                         console.error("Invalid JSON File:", error);
                     }
@@ -433,13 +436,13 @@ function importTab() {
 
                 reader.readAsText(file);
             } else {
-                console.log("File is not a JSON file.");
+                console.log("Không đúng định dạng file");
             }
         } else {
             console.log("No file selected.");
         }
         // Remove the hidden input element
         fileInput.remove();
-        location.reload();
+        // location.reload();
     });
 }
