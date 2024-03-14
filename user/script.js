@@ -22,9 +22,9 @@ fetch("../editor/index.html") // Replace '/path/to/your/file.txt' with the actua
             e.className = "";
             var img = e.querySelector("img");
             var a = e.querySelector("a");
-            // console.log(img.src.split("/")[5]);
-            img.src = "../editor/img/" + img.src.split("/")[5];
-            img.style = "width: 50px; height: 50px;border-radius: 25px";
+            img.src = "../editor/img/" + img.src.split("/")[(img.src.split("/")).length - 1];
+            console.log(img.src);
+            img.style = "width: 30px; height: 30px;border-radius: 25px";
             e.querySelector("label").remove();
             var ulChild = e.querySelector("ul");
             a.className = "mobileNav_tier1_item";
@@ -59,6 +59,8 @@ fetch("../editor/index.html") // Replace '/path/to/your/file.txt' with the actua
             $(".mobileNav_tier1 li").removeClass("active");
             $(this).toggleClass("active");
         });
+        $(".arrow").remove();
+
         addEventOpenBook();
     })
     .catch((error) => {
@@ -75,16 +77,11 @@ function addEventOpenBook() {
                     .then((response) => response.json())
                     .then((json) => {
                         // console.log(json['index'])
-                        $("#book-body").html(
-                            `<a>${i + 1}. ${$(this).children("a").html()}</a>${
-                                json["index"]
-                            }`
-                        );
+                        $("#book-body").html(json["index"]);
                     });
             } catch (error) {
                 alert("Khong co ebook nay");
             }
-            
         });
     });
 }

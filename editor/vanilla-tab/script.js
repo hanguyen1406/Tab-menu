@@ -295,7 +295,8 @@ async function publishForUser() {
     doc.firstChild.remove();
     doc.querySelector(".container").remove();
     doc.querySelector("#excute").remove();
-    console.log(doc);
+    doc.querySelector("#text-input").contentEditable = "false";
+    document.querySelectorAll(".sub-menu img").forEach(e => console.log(e.src));
 
     var data = {
         index: currentEbook,

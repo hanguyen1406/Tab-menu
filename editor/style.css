@@ -69,6 +69,7 @@ body {
     padding: 18px 0 18px 20px;
     font-size: 12px;
     outline: 0;
+
     -webkit-transition: all 200ms ease-in;
     -moz-transition: all 200ms ease-in;
     -o-transition: all 200ms ease-in;
@@ -109,6 +110,14 @@ body {
     text-overflow: ellipsis;
     width: 120px;
 }
+.title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+    top: 4px;
+    position: relative;
+}
 a {
     cursor: pointer;
 }
@@ -128,6 +137,7 @@ input[type="file"] {
 }
 .titleIcon {
     width: 17px;
+    height: 17px;
     position: relative;
     margin: 1px;
     border-radius: 50%;

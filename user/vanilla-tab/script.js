@@ -1,18 +1,19 @@
 // script for vanilla tab
 // const $ = document.querySelector.bind(document);
-current_active_tab = 0;
+var current_active_tab = 0;
 
-currentTab = 0;
-advancedOptionButton = document.querySelectorAll(".adv-option-button");
-alignButtons = document.querySelectorAll(".align");
-spacingButtons = document.querySelectorAll(".spacing");
-formatButtons = document.querySelectorAll(".format");
-scriptButtons = document.querySelectorAll(".script");
+var currentTab = 0;
+var advancedOptionButton = document.querySelectorAll(".adv-option-button");
+var alignButtons = document.querySelectorAll(".align");
+var spacingButtons = document.querySelectorAll(".spacing");
+var formatButtons = document.querySelectorAll(".format");
+var scriptButtons = document.querySelectorAll(".script");
+var $$ = document.querySelectorAll.bind(document);
 
-fontName = document.getElementById("fontName");
-fontSizeRef = document.getElementById("fontSize");
-writingArea = document.getElementById("text-input");
-linkButton = document.getElementById("createLink");
+var fontName = document.getElementById("fontName");
+var fontSizeRef = document.getElementById("fontSize");
+var writingArea = document.getElementById("text-input");
+var linkButton = document.getElementById("createLink");
 function addEventTab() {
     $$("div.tab").forEach((x) => {
         const Tab_Stripe = x.querySelector(".tab-stripe");
