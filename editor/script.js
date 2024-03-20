@@ -176,7 +176,7 @@ function addEventOpenBook() {
             try {
                 currentEbook = $(this).attr("id").slice(1);
                 var id = currentEbook;
-                await fetch(`./htmlcode/${id}.json`)
+                await fetch(`./htmlcode/${id}.json?v=1.01`)
                     .then((response) => response.json())
                     .then((json) => {
                         // console.log(json['index'])
@@ -227,6 +227,27 @@ async function saveBody() {
             "Content-Type": "application/x-www-form-urlencoded",
         },
         body: "htmlContent=" + encodeURIComponent(htmlContent),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.text();
+        })
+        .then((data) => {
+            console.log(data); // Log the response from PHP script
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+}
+
+async function connSql() {
+    await fetch("sqlConn.php", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
     })
         .then((response) => {
             if (!response.ok) {
@@ -414,4 +435,6 @@ $(document).ready(() => {
             alert("Chưa chỉnh sửa data!");
         }
     });
+
+    connSql();
 });
