@@ -28,6 +28,7 @@ let fontList = [
     "Courier New",
     "Cursive",
 ];
+var html = "";
 const intializer = () => {
     highlighter(alignButtons, true);
     highlighter(spacingButtons, true);
@@ -170,7 +171,9 @@ function handleContextMenu(event) {
     });
 }
 
-function addEventOpenBook() {
+async function addEventOpenBook() {
+    await connSql();
+    console.log(html);
     $(".sub-menu ul li").each((i, e) => {
         $(e).on("click", async function (e) {
             try {
@@ -180,17 +183,21 @@ function addEventOpenBook() {
                     .then((response) => response.json())
                     .then((json) => {
                         // console.log(json['index'])
+                        // $("#book-body").html(
+                        //     `<a>${i + 1}. ${$(this).children("a").html()}</a>${
+                        //         json["index"]
+                        //     }`
+                        // );
+
                         $("#book-body").html(
-                            `<a>${i + 1}. ${$(this).children("a").html()}</a>${
-                                json["index"]
-                            }`
+                            `<a>${i + 1}. Test Sql</a>${html}`
                         );
                     });
             } catch (error) {
                 console.log("Khong co ebook nay");
             }
-            var tabct = document.querySelector(".tab-content");
-            observer1.observe(tabct, config);
+            // var tabct = document.querySelector(".tab-content");
+            // observer1.observe(tabct, config);
         });
     });
 }
@@ -211,7 +218,6 @@ function addEventOpenBook() {
 })();
 
 async function saveBody() {
-    var htmlContent = $("html").html();
     changed = true;
     $("#save").removeClass("changed");
     $("#book-body").html("Chọn sách cần sửa");
@@ -226,7 +232,7 @@ async function saveBody() {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: "htmlContent=" + encodeURIComponent(htmlContent),
+        body: "htmlContent=" + htmlContent,
     })
         .then((response) => {
             if (!response.ok) {
@@ -244,19 +250,21 @@ async function saveBody() {
 
 async function connSql() {
     await fetch("sqlConn.php", {
-        method: "GET",
+        method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
         },
+        
     })
         .then((response) => {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
-            return response.text();
+            return response.json();
         })
-        .then((data) => {
-            console.log(data); // Log the response from PHP script
+        .then((json) => {
+            // console.log(json);
+            html = json["index"];
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -435,6 +443,4 @@ $(document).ready(() => {
             alert("Chưa chỉnh sửa data!");
         }
     });
-
-    connSql();
 });

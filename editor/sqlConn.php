@@ -9,32 +9,27 @@ $database = "hanguye4_guitar"; // Replace with your MySQL database name
 try {
     $conn = new mysqli($servername, $username, $password, $database);
 
-    // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $sql = "select * from Ebook";
+    $sql = "select * from Ebook where id=1";
     $result = $conn->query($sql);
 
-    // Check if query was successful
     if ($result === false) {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "error";
     } else {
-        // Fetch and output results
         while ($row = $result->fetch_assoc()) {
-            echo $row["html"] . "<br>";
+            echo "{\"index\": \"".$row["html"]."\"}";
         }
     }
-    echo "Connected successfully";
-
-    // Perform your database operations here...
+    
+    // echo "Connected successfully";
 
 } catch(PDOException $e) {
     // If connection fails, catch and display the error
-    echo "Connection failed: " . $e->getMessage();
+    echo "error";
 }
 
-// Close connection (PDO doesn't require explicit closing, but it's good practice)
-$conn = null;
+$conn->close();
 
 ?>
