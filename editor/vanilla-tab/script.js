@@ -267,7 +267,7 @@ async function saveVanillaTab() {
     $("#book-body > :first-child").remove();
     var data = {
         index: currentEbook,
-        html:  $("#book-body").html()
+        html: $("#book-body").html(),
     };
     // console.log(data['html']);
     await fetch("./saveEbook.php", {
@@ -295,7 +295,9 @@ async function publishForUser() {
     doc.querySelector(".container").remove();
     doc.querySelector("#excute").remove();
     doc.querySelector("#text-input").contentEditable = "false";
-    document.querySelectorAll(".sub-menu img").forEach(e => console.log(e.src));
+    document
+        .querySelectorAll(".sub-menu img")
+        .forEach((e) => console.log(e.src));
 
     var data = {
         index: currentEbook,
@@ -324,7 +326,6 @@ async function exportTab() {
     // saveVanillaTab();
     const currentDate = new Date();
 
-    // Get the various components of the date and time
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Month is 0-based, so add 1
     const day = currentDate.getDate();
@@ -334,34 +335,21 @@ async function exportTab() {
     var version = `${hour}${minute}${second}_${day}${month}${year}`;
 
     await saveVanillaTab();
-    // console.log(currentEbook);
-    var fileUrl = `htmlcode/${currentEbook}.json`;
-    fetch(fileUrl)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-        })
-        .then((data) => {
-            //console.log(data);
-            var jsonString = JSON.stringify(data);
-            var blob = new Blob([jsonString], { type: "application/json" });
-            var url = URL.createObjectURL(blob);
-            var link = document.createElement("a");
-            link.href = url;
-            link.download = version + ".json";
+    var fc = $("#book-body > :first-child").html();
 
-            document.body.appendChild(link);
+    var data = { index: $("#book-body").html() };
 
-            link.click();
-        })
-        .catch((error) => {
-            console.error(
-                "There was a problem with the fetch operation:",
-                error
-            );
-        });
+    var jsonString = JSON.stringify(data);
+    var blob = new Blob([jsonString], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement("a");
+    link.href = url;
+    link.download = version + ".json";
+
+    document.body.appendChild(link);
+
+    link.click();
+    $("#book-body").prepend(`<a>${fc}</a>`);
 }
 
 function importTab() {
