@@ -267,10 +267,9 @@ async function saveVanillaTab() {
     $("#book-body > :first-child").remove();
     var data = {
         index: currentEbook,
-        data: {
-            index: $("#book-body").html(),
-        },
+        html:  $("#book-body").html()
     };
+    // console.log(data['html']);
     await fetch("./saveEbook.php", {
         method: "POST",
         headers: {

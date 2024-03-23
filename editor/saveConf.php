@@ -1,19 +1,31 @@
 <?php
 $jsonData = file_get_contents('php://input');
 $jsonData = json_decode($jsonData, true);
-$filePath = "./htmlcode/config.json";
 
-$file1 = fopen($filePath, "w");
-$noli = $jsonData['noli']['noli'];
-$file2 = fopen("./htmlcode/".$noli.".json", "w");
+$noli = $jsonData['noli'];
 $data = $jsonData['tabCt'];
-if ($file1) {
-    fwrite($file1, json_encode($jsonData['noli'], true));
-    fwrite($file2, json_encode($data));
-    fclose($file1);
-    fclose($file2);
-    echo "Saved config";
-} else {
-    echo "Error";
+
+$servername = "103.200.23.160"; // Replace with your MySQL server hostname or IP address
+$username = "hanguye4_admin"; // Replace with your MySQL username
+$password = "Hanhat56789"; // Replace with your MySQL password
+$database = "hanguye4_guitar"; // Replace with your MySQL database name
+
+try {
+    $conn = new mysqli($servername, $username, $password, $database);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $stmt = $conn->prepare("INSERT INTO Ebook (id, html) VALUES (?, ?)");
+    $stmt->bind_param("ss", $noli, $data);
+    $data = json_encode($data);
+    $stmt->execute();
+    echo "Insert ebook ".$noli." successfully";
+} catch(PDOException $e) {
+    echo "error";
 }
+
+$stmt->close();
+$conn->close();
+
 ?>

@@ -151,14 +151,14 @@ input[type="file"] {
     z-index: 1;
     border-radius: 5px;
 }
-.context-menu-item {
+.context-menu-i {
     padding: 8px 12px;
     cursor: pointer;
     justify-content: space-between;
     display: flex;
 }
 
-.context-menu-item:hover {
+.context-menu-i:hover {
     background-color: #f0f0f0;
 }
 .sub-menu li {
