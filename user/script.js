@@ -4,6 +4,8 @@ $(".burger").on("click", function () {
     $(".mobileNav").toggleClass("mobileNav-open");
 });
 
+var html = "";
+
 fetch("../editor/index.html") // Replace '/path/to/your/file.txt' with the actual path to your file
     .then((response) => {
         if (!response.ok) {
@@ -22,7 +24,9 @@ fetch("../editor/index.html") // Replace '/path/to/your/file.txt' with the actua
             e.className = "";
             var img = e.querySelector("img");
             var a = e.querySelector("a");
-            img.src = "../editor/img/" + img.src.split("/")[(img.src.split("/")).length - 1];
+            img.src =
+                "../editor/img/" +
+                img.src.split("/")[img.src.split("/").length - 1];
             console.log(img.src);
             img.style = "width: 30px; height: 30px;border-radius: 25px";
             e.querySelector("label").remove();
@@ -69,15 +73,32 @@ fetch("../editor/index.html") // Replace '/path/to/your/file.txt' with the actua
 
 function addEventOpenBook() {
     $(".ebook").each((i, e) => {
-        $(e).on("click", async function (e) {
+        $(e).on("click", async function (event) {
             try {
                 currentEbook = $(this).attr("id").slice(1);
                 var id = currentEbook;
-                await fetch(`./htmlcode/${id}.json`)
-                    .then((response) => response.json())
+                await fetch("loadEbook.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: "id=" + id,
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+                        return response.json();
+                    })
                     .then((json) => {
-                        // console.log(json['index'])
-                        $("#book-body").html(json["index"]);
+                        html = json["index"];
+                        $("#book-body").html(html);
+                        $(".container").remove();
+                        $("#excute").remove();
+                        $("#contextMenu").remove();
+                    })
+                    .catch((error) => {
+                        html = "<br>Không tìm thấy sách này trong csdl";
                     });
             } catch (error) {
                 alert("Khong co ebook nay");

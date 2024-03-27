@@ -14,10 +14,13 @@ try {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $stmt = $conn->prepare("INSERT INTO Ebook (id, html) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO ebook (id, html) VALUES (?, ?)");
     $stmt->bind_param("ss", $noli, $data);
     $data = json_encode($data);
     $stmt->execute();
+    $stmt2 = $conn->prepare("INSERT INTO ebookpublish (id, html) VALUES (?, ?)");
+    $stmt2->bind_param("ss", $noli, $data);
+    $stmt2->execute();
     echo "Insert ebook ".$noli." successfully";
 } catch(PDOException $e) {
     echo "error";

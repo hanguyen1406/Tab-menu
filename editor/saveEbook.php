@@ -14,7 +14,7 @@ try {
         die("Connection failed: " . $conn->connect_error);
     }
     $data = $data['html'];
-    $stmt = $conn->prepare("update Ebook set html=? where id=?");
+    $stmt = $conn->prepare("update ebook set html=? where id=?");
     $stmt->bind_param("ss", $data, $index);
     $data = json_encode($data);
     $stmt->execute();

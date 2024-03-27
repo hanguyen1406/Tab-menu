@@ -104,6 +104,29 @@ const addEventForItem = async () => {
         });
     }
 };
+
+async function deleteEbook(id) {
+    await fetch("deleteEbook.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "id=" + id,
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.text();
+        })
+        .then((text) => {
+            console.log(text);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
 function addEventForItem2() {
     $("#leftside-navigation .sub-menu ul li .up2").on("click", function (e) {
         // console.log(this);
@@ -136,28 +159,11 @@ function addEventForItem2() {
             var result = confirm("Chắc chắn xóa?");
             if (result) {
                 var li = $(this).closest("li");
-                await fetch("deleteEbook.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    body: "id=" + li.attr("id").slice(1),
-                })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error("Network response was not ok");
-                        }
-                        return response.text();
-                    })
-                    .then((text) => {
-                        console.log(text);
-                        li.remove();
-                        saveBody();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                li.attr("id").slice(1);
+                await deleteEbook(id);
+                li.remove();
             }
+            saveBody();
         }
     );
 
@@ -243,7 +249,7 @@ async function saveBody() {
         })
         .then((data) => {
             changed = true;
-            location.reload(true);
+            //location.reload(true);
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -271,7 +277,7 @@ async function connSql(id) {
         })
         .catch((error) => {
             html =
-                "Không tìm thấy sách này trong csdl, vui lòng xóa và tạo lại";
+                "<br>Không tìm thấy sách này trong csdl, vui lòng xóa và tạo lại";
             // console.error("Error here:", error);
         });
 }
@@ -338,21 +344,34 @@ $(document).ready(() => {
             }
         }
     });
-    $("#del").click(function (e) {
+    $("#del").click(async function (e) {
         e.preventDefault();
-        var result = window.confirm(`Chắc chắn xóa tiêu đề ${index}`);
+        var result = window.confirm(
+            `Chắc chắn xóa tiêu đề ${index} các ebook con sẽ bị xóa`
+        );
+        // console.log(index);
+
         if (result) {
-            $(".sub-menu").eq(index).remove();
+            $(".sub-menu")
+                .eq(index)
+                .children("ul")
+                .children("li")
+                .each(async (i, e) => {
+                    await deleteEbook($(e).attr("id").slice(1));
+                });
+            await $(".sub-menu").eq(index).remove();
+            saveBody();
         }
     });
-    $("#add").click(function (e) {
+    $("#add").click(async function (e) {
         e.preventDefault();
         var newId = "";
-        $(".sub-menu li").each((i, e) => {
-            newId = newId < $(e).attr("id") ? $(e).attr("id") : newId;
-        });
-
-        newId = parseInt(newId.slice(1));
+        if ($(".sub-menu li").length > 0) {
+            $(".sub-menu li").each((i, e) => {
+                newId = newId < $(e).attr("id") ? $(e).attr("id") : newId;
+            });
+            newId = parseInt(newId.slice(1));
+        } else newId = 0;
         console.log(newId);
         var itemName = prompt(`Tên tiêu đề thêm mới:`);
         if (itemName) {
@@ -360,7 +379,7 @@ $(document).ready(() => {
                 noli: ++newId,
                 tabCt: `\n        <meta charset=\"UTF-8\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n        <title>T\u1ef1 H\u1ecdc Guitar - Ebook<\/title>\n        <link rel=\"icon\" href=\"https:\/\/cdn-icons-png.flaticon.com\/512\/3209\/3209985.png\" type=\"image\/png\">\n\n        <link rel=\"stylesheet\" href=\"https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/font-awesome\/6.2.1\/css\/all.min.css\">\n        <!-- import style for vanilla tab -->\n        <link href=\".\/vanilla-tab\/style.css\" rel=\"stylesheet\">\n        <link href=\".\/text-editor\/style.css\" rel=\"stylesheet\">\n    \n    \n        <div class=\"container\">\n            <div class=\"options\">\n                <button id=\"bold\" class=\"option-button format\">\n                    <i class=\"fa-solid fa-bold\"><\/i>\n                <\/button>\n                <button id=\"italic\" class=\"option-button format active\">\n                    <i class=\"fas fa-italic\"><\/i>\n                <\/button>\n                <button id=\"underline\" class=\"option-button format\">\n                    <i class=\"fas fa-underline\"><\/i>\n                <\/button>\n\n                <button id=\"superscript\" class=\"option-button script\">\n                    <i class=\"fa-solid fa-superscript\"><\/i>\n                <\/button>\n                <button id=\"subscript\" class=\"option-button script\">\n                    <i class=\"fa-solid fa-subscript\"><\/i>\n                <\/button>\n\n                <button id=\"insertOrderedList\" class=\"option-button\">\n                    <div class=\"fa-solid fa-list-ol\"><\/div>\n                <\/button>\n                <button id=\"insertUnorderedList\" class=\"option-button\">\n                    <i class=\"fa-solid fa-list\"><\/i>\n                <\/button>\n\n                <button id=\"undo\" class=\"option-button\">\n                    <i class=\"fa-solid fa-rotate-left\"><\/i>\n                <\/button>\n                <button id=\"redo\" class=\"option-button\">\n                    <i class=\"fa-solid fa-rotate-right\"><\/i>\n                <\/button>\n\n                <button id=\"createLink\" class=\"adv-option-button\">\n                    <i class=\"fa fa-link\"><\/i>\n                <\/button>\n\n                <button id=\"unlink\" class=\"option-button\">\n                    <i class=\"fa fa-unlink\"><\/i>\n                <\/button>\n\n                <button id=\"justifyLeft\" class=\"option-button align active\">\n                    <i class=\"fa-solid fa-align-left\"><\/i>\n                <\/button>\n                <button id=\"justifyCenter\" class=\"option-button align\">\n                    <i class=\"fa-solid fa-align-center\"><\/i>\n                <\/button>\n                <button id=\"justifyRight\" class=\"option-button align\">\n                    <i class=\"fa-solid fa-align-right\"><\/i>\n                <\/button>\n                <button id=\"justifyFull\" class=\"option-button align\">\n                    <i class=\"fa-solid fa-align-justify\"><\/i>\n                <\/button>\n                <button id=\"indent\" class=\"option-button spacing\">\n                    <i class=\"fa-solid fa-indent\"><\/i>\n                <\/button>\n                <button id=\"outdent\" class=\"option-button spacing\">\n                    <i class=\"fa-solid fa-outdent\"><\/i>\n                <\/button>\n                <select id=\"formatBlock\" class=\"adv-option-button\">\n                    <option value=\"H1\">H1<\/option>\n                    <option value=\"H2\">H2<\/option>\n                    <option value=\"H3\">H3<\/option>\n                    <option value=\"H4\">H4<\/option>\n                    <option value=\"H5\">H5<\/option>\n                    <option value=\"H6\">H6<\/option>\n                <\/select>\n                <select id=\"fontName\" class=\"adv-option-button\">\n                    <option value=\"Arial\">Arial<\/option>\n                    <option value=\"Verdana\">Verdana<\/option>\n                    <option value=\"Times New Roman\">Times New Roman<\/option>\n                    <option value=\"Garamond\">Garamond<\/option>\n                    <option value=\"Georgia\">Georgia<\/option>\n                    <option value=\"Courier New\">Courier New<\/option>\n                    <option value=\"Cursive\">Cursive<\/option>\n                <\/select>\n                <select id=\"fontSize\" class=\"adv-option-button\">\n                    <option value=\"1\">1<\/option>\n                    <option value=\"2\">2<\/option>\n                    <option value=\"3\">3<\/option>\n                    <option value=\"4\">4<\/option>\n                    <option value=\"5\">5<\/option>\n                    <option value=\"6\">6<\/option>\n                    <option value=\"7\">7<\/option>\n                <\/select>\n\n                <div class=\"input-wrapper\">\n                    <input type=\"color\" id=\"foreColor\" class=\"adv-option-button\">\n                    <label for=\"foreColor\">Font Color<\/label>\n                <\/div>\n                <div class=\"input-wrapper\">\n                    <input type=\"color\" id=\"backColor\" class=\"adv-option-button\">\n                    <label for=\"backColor\">Highlight Color<\/label>\n                <\/div>\n            <\/div>\n        <\/div>\n        <div class=\"tab\"><grammarly-extension data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\" class=\"dnXmp\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\" class=\"dnXmp\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\" class=\"dnXmp\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\" class=\"dnXmp\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\" class=\"dnXmp\"><\/grammarly-extension><grammarly-extension data-grammarly-shadow-root=\"true\" style=\"position: absolute; top: -2px; left: -2px; pointer-events: none;\" class=\"dnXmp\"><\/grammarly-extension>\n            <nav class=\"tab-stripe\">\n                <a class=\"active\" href=\"#Tab1-Q1\">1<\/a>\n                <!-- <a style=\"font-weight: bold\" href=\"#addTabBtn\">+<\/a> -->\n                \n            <\/nav>\n            <button class=\"tab-scroll-button left hidden\"><\/button>\n            <button class=\"tab-scroll-button right\"><\/button>\n            <button class=\"tab-full-screen-button\"><\/button>\n            <div class=\"tab-content\">\n                <div class=\"active\" id=\"#Tab1-Q1\">\n                    <div id=\"text-input\" contenteditable=\"true\" spellcheck=\"false\"><br><br><\/div>\n                <\/div>\n                \n                \n                \n                \n                \n                \n                \n                \n                \n                \n                \n                \n                \n            <\/div>\n        <\/div>\n        <div id=\"excute\" style=\"text-align: center\">\n            <button style=\"\n                    width: fit-content;\n                    display: inline;\n                    font-size: large;\n                    height: fit-content;\n                \" onclick=\"saveVanillaTab()\" id=\"saveEbook\">\n                Save\n            <\/button>\n\n            <button style=\"\n                    width: fit-content;\n                    display: inline;\n                    font-size: large;\n                    height: fit-content;\n                \" onclick=\"publishForUser()\" id=\"publish\">\n                Publish\n            <\/button>\n            <button style=\"\n                    width: fit-content;\n                    display: inline;\n                    font-size: large;\n                    height: fit-content;\n                \" onclick=\"exportTab()\" id=\"export\">\n                Export\n            <\/button>\n            <button style=\"\n                    width: fit-content;\n                    display: inline;\n                    font-size: large;\n                    height: fit-content;\n                \" id=\"import\" onclick=\"importTab()\">\n                Import\n            <\/button>\n        <\/div>\n\n        <div class=\"context-menu\" id=\"contextMenu\" style=\"font-weight: bold; display: none; left: 331px; top: 141px;\">\n            <div class=\"context-menu-item\" id=\"deleteItem\">\n                Delete <i class=\"fas fa-trash-alt\"><\/i>\n            <\/div>\n            <div class=\"context-menu-item\" id=\"insertItem\">\n                Insert <i class=\"fas fa-sign-in-alt\"><\/i>\n            <\/div>\n            <div class=\"context-menu-item\" id=\"moveRightItem\">\n                Move right <i class=\"fas fa-long-arrow-alt-right\"><\/i>\n            <\/div>\n            <div class=\"context-menu-item\" id=\"moveLeftItem\">\n                Move left <i class=\"fas fa-long-arrow-alt-left\"><\/i>\n            <\/div>\n        <\/div>\n\n        <script src=\"https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/jquery\/3.3.1\/jquery.min.js\"><\/script>\n        <script src=\"https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/popper.js\/1.14.7\/umd\/popper.min.js\"><\/script>\n        <script src=\"https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/twitter-bootstrap\/4.3.1\/js\/bootstrap.min.js\"><\/script>\n\n        <!-- script for text editor -->\n        <script src=\".\/text-editor\/script.js\"><\/script>\n        <!-- script for vanilla tab -->\n        <script src=\".\/vanilla-tab\/script.js\"><\/script>\n\n        <div id=\"5386CA82-7210-0F03-F0B8-355E1D75DEB4\"><\/div>\n\n        <div id=\"7AED1372-33EB-4BE0-41A5-C4BAC04DA6C6\"><\/div>\n\n        <div id=\"B474ABDC-1C4A-A599-A5FA-416E31C6C6EB\"><\/div>\n\n        <div id=\"39A9C575-D3CD-015B-5FBF-EA06C0341D48\"><\/div>\n    \n    \n\n<div id=\"3F33D0BE-7BC7-8C36-64E2-CE811CDD5C33\"><\/div>\n<div id=\"DE4C0925-BF73-BE95-B09F-587F844B389D\"><\/div>\n<div id=\"EB29B2C5-B3A6-BEAF-6993-462EFC18DFF9\"><\/div>\n<div id=\"C8C16FE7-771B-E6E5-CF14-E402AE1EF923\"><\/div>\n<div id=\"09518C6E-4B7F-091A-4DF3-00F694F5F8FC\"><\/div>\n<div id=\"571ED2CE-1C9A-80B5-84E2-CAB3F898ED9A\"><\/div>\n<div id=\"D701A9B4-141E-CF69-9335-D7420796F0AD\"><\/div>\n<div id=\"B8B8ADA9-AFF0-63C2-E8DD-DF94C44A2551\"><\/div>\n<div id=\"E27153D5-DB6A-597C-9520-8735ED949455\"><\/div>\n<div><\/div>\n<div><\/div>\n<grammarly-desktop-integration data-grammarly-shadow-root=\"true\"><\/grammarly-desktop-integration><grammarly-popups data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"--rem: 16;\"><\/grammarly-popups>\n<grammarly-popups data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"--rem: 16;\"><\/grammarly-popups>\n<grammarly-popups data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"--rem: 16;\"><\/grammarly-popups>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<grammarly-popups data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"--rem: 16;\"><\/grammarly-popups>\n<div><\/div>\n<grammarly-popups data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"--rem: 16;\"><\/grammarly-popups>\n<div><\/div>\n\n<div><\/div>\n<div><\/div>\n\n\n\n\n<!-- script for rich text edior --><grammarly-popups data-grammarly-shadow-root=\"true\" class=\"dnXmp\" style=\"--rem: 16;\"><\/grammarly-popups>\n`,
             };
-            fetch("saveConf.php", {
+            await fetch("saveConf.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -379,7 +398,7 @@ $(document).ready(() => {
                 .catch((error) => {
                     console.error("Error:", error);
                 });
-            $(".sub-menu").eq(index).children("ul").append(`
+            await $(".sub-menu").eq(index).children("ul").append(`
             <li id="l${newId}">
                 <a title="${itemName}">${itemName}</a>
                 <span style="margin-top: 10px">
@@ -398,8 +417,8 @@ $(document).ready(() => {
                     />
                 </span>
             </li>`);
-            addEventForItem();
-            addEventOpenBook();
+            await addEventForItem();
+            await addEventOpenBook();
         }
         saveBody();
     });
@@ -440,8 +459,10 @@ $(document).ready(() => {
                 <ul></ul>
             </li>
             `);
+
+            await addEventForItem();
+            await addEventOpenBook();
             await saveBody();
-            addEventForItem();
         }
     });
     $("#save").click(() => {

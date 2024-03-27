@@ -4,6 +4,7 @@
 
 body {
     background: #eeeaea;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -38,6 +39,8 @@ ol {
 
 .mobileNav-open {
     display: block;
+    position:absolute;
+    z-index: 3;
 }
 
 .mobileNav_tier1 {
