@@ -1,14 +1,12 @@
 <?php
+include "sever.php";
+
 $jsonData = file_get_contents('php://input');
 $jsonData = json_decode($jsonData, true);
 
 $noli = $jsonData['noli'];
 $data = $jsonData['tabCt'];
 
-$servername = "103.200.23.160"; // Replace with your MySQL server hostname or IP address
-$username = "hanguye4_admin"; // Replace with your MySQL username
-$password = "Hanhat56789"; // Replace with your MySQL password
-$database = "hanguye4_guitar"; // Replace with your MySQL database name
 
 try {
     $conn = new mysqli($servername, $username, $password, $database);

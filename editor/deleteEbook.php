@@ -9,15 +9,13 @@ try {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $sql = "select * from ebook where id=".$id;
+    $sql = "delete from ebook where id=".$id;
     $result = $conn->query($sql);
 
     if ($result === false) {
         echo "error";
     } else {
-        while ($row = $result->fetch_assoc()) {
-            echo "{\"index\": ".$row["html"]."}";
-        }
+        echo "success";
     }
 
 } catch(PDOException $e) {

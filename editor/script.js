@@ -131,11 +131,32 @@ function addEventForItem2() {
 
     $("#leftside-navigation .sub-menu ul li .delete2").on(
         "click",
-        function (e) {
+        async function (e) {
             e.stopPropagation();
             var result = confirm("Chắc chắn xóa?");
             if (result) {
-                $(this).closest("li").remove();
+                var li = $(this).closest("li");
+                await fetch("deleteEbook.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: "id=" + li.attr("id").slice(1),
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+                        return response.text();
+                    })
+                    .then((text) => {
+                        console.log(text);
+                        li.remove();
+                        saveBody();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             }
         }
     );
@@ -181,7 +202,6 @@ async function addEventOpenBook() {
                 $("#book-body").html(
                     `<a>${i + 1}. ${$(this).children("a").html()}</a>${html}`
                 );
-
             } catch (error) {
                 console.log("Khong co ebook nay");
             }
@@ -193,13 +213,6 @@ async function addEventOpenBook() {
 
 (async () => {
     try {
-        const response = await fetch("./htmlcode/config.json");
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        const json = await response.json();
-        window.noli = json["noli"]; // Assign noli variable to global scope
-        console.log(noli); // Log the fetched data
         addEventOpenBook();
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -207,7 +220,6 @@ async function addEventOpenBook() {
 })();
 
 async function saveBody() {
-    changed = true;
     $("#save").removeClass("changed");
     $("#book-body").html("Chọn sách cần sửa");
     $("style").remove();
@@ -230,7 +242,8 @@ async function saveBody() {
             return response.text();
         })
         .then((data) => {
-            console.log(data); // Log the response from PHP script
+            changed = true;
+            location.reload(true);
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -249,7 +262,7 @@ async function connSql(id) {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
-            console.log(response);
+            // console.log(response);
 
             return response.json();
         })
@@ -257,7 +270,9 @@ async function connSql(id) {
             html = json["index"];
         })
         .catch((error) => {
-            console.error("Error:", error);
+            html =
+                "Không tìm thấy sách này trong csdl, vui lòng xóa và tạo lại";
+            // console.error("Error here:", error);
         });
 }
 
@@ -400,11 +415,11 @@ $(document).ready(() => {
             $(".title").eq(index).attr("title", userInput);
         }
     });
-    $("#addItem").click(() => {
+    $("#addItem").click(async () => {
         var userInput = prompt(`Tên tiêu đề thêm mới:`);
         if (userInput !== null) {
             noi++;
-            $(".nano-content").append(`
+            await $(".nano-content").append(`
             <li class="sub-menu">
                 <a>
                     <label for="image${noi}">
@@ -425,6 +440,7 @@ $(document).ready(() => {
                 <ul></ul>
             </li>
             `);
+            await saveBody();
             addEventForItem();
         }
     });
