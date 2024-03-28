@@ -66,6 +66,9 @@ ol {
     left: 75px;
     font-size: 1.5rem;
     text-align: left;
+    height: 300px;
+    overflow-y:scroll;
+    overflow-x:hidden;
 }
 
 .mobileNav_tier2 li {

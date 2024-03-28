@@ -96,6 +96,7 @@ function addEventOpenBook() {
                         $(".container").remove();
                         $("#excute").remove();
                         $("#contextMenu").remove();
+                        $("div").attr("contenteditable", false);
                     })
                     .catch((error) => {
                         html = "<br>Không tìm thấy sách này trong csdl";

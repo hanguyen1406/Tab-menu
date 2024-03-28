@@ -3,16 +3,20 @@
 current_active_tab = 0;
 
 currentTab = 0;
-advancedOptionButton = document.querySelectorAll(".adv-option-button");
-alignButtons = document.querySelectorAll(".align");
-spacingButtons = document.querySelectorAll(".spacing");
-formatButtons = document.querySelectorAll(".format");
-scriptButtons = document.querySelectorAll(".script");
 
-fontName = document.getElementById("fontName");
-fontSizeRef = document.getElementById("fontSize");
-writingArea = document.getElementById("text-input");
-linkButton = document.getElementById("createLink");
+function initEbookEditor() {
+    advancedOptionButton = document.querySelectorAll(".adv-option-button");
+    alignButtons = document.querySelectorAll(".align");
+    spacingButtons = document.querySelectorAll(".spacing");
+    formatButtons = document.querySelectorAll(".format");
+    scriptButtons = document.querySelectorAll(".script");
+
+    fontName = document.getElementById("fontName");
+    fontSizeRef = document.getElementById("fontSize");
+    writingArea = document.getElementById("text-input");
+    linkButton = document.getElementById("createLink");
+}
+
 function addEventTab() {
     $$("div.tab").forEach((x) => {
         const Tab_Stripe = x.querySelector(".tab-stripe");
@@ -290,22 +294,10 @@ async function saveVanillaTab() {
 
 async function publishForUser() {
     await saveVanillaTab();
-    var doc = document.querySelector("#book-body").cloneNode(true);
-    doc.firstChild.remove();
-    doc.querySelector(".container").remove();
-    doc.querySelector("#excute").remove();
-    doc.querySelector("#text-input").contentEditable = "false";
-    document
-        .querySelectorAll(".sub-menu img")
-        .forEach((e) => console.log(e.src));
-
     var data = {
         index: currentEbook,
-        data: {
-            index: doc.innerHTML,
-        },
     };
-    await fetch("./publish.php", {
+    await fetch("publish.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

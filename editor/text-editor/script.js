@@ -1,9 +1,9 @@
 // let optionsButtons = document.querySelectorAll(".option-button");
 
-function modifyText (command, defaultUi, value) {
+function modifyText(command, defaultUi, value) {
     console.log(command);
     document.execCommand(command, defaultUi, value);
-};
+}
 
 function addEventForEbook() {
     advancedOptionButton.forEach((button) => {
@@ -11,9 +11,14 @@ function addEventForEbook() {
             modifyText(button.id, false, button.value);
         });
     });
+    document.querySelectorAll(".option-button").forEach((button) => {
+        button.addEventListener("click", () => {
+            modifyText(button.id, false, null);
+        });
+    });
     linkButton.addEventListener("click", () => {
         let userLink = prompt("Enter a URL");
-    
+
         if (userLink.startsWith("http")) {
             if (userLink.search("youtube") > -1) {
                 // console.log("youtube");
@@ -51,9 +56,9 @@ function addEventForEbook() {
                 insertElement(image);
             }
         }
-    
+
         // modifyText(linkButton.id, false, userLink);
-    
+
         var links = document
             .getElementsByClassName("tab-content")[0]
             .querySelectorAll("a");
@@ -69,14 +74,6 @@ function addEventForEbook() {
     intializer();
 }
 
-document.querySelectorAll(".option-button").forEach((button) => {
-    button.addEventListener("click", () => {
-        modifyText(button.id, false, null);
-    });
-});
-
-
-
 function isImgUrl(url) {
     const imageExtensions = [
         ".jpg",
@@ -91,7 +88,7 @@ function isImgUrl(url) {
         if (url.search(imageExtensions[i]) > -1) return true;
     }
     return false;
-};
+}
 
 function insertAtCursor(textarea, textToInsert) {
     // Get the current selection or cursor position
@@ -113,7 +110,7 @@ function insertAtCursor(textarea, textToInsert) {
     textarea.setSelectionRange(newPosition, newPosition);
 }
 
-function insertElement (elem) {
+function insertElement(elem) {
     var selection = window.getSelection();
     var range = selection.getRangeAt(0);
 
@@ -125,11 +122,9 @@ function insertElement (elem) {
 
     selection.removeAllRanges();
     selection.addRange(range);
-};
+}
 
-
-
-function highlighter (className, needsRemoval) {
+function highlighter(className, needsRemoval) {
     className.forEach((button) => {
         button.addEventListener("click", () => {
             if (needsRemoval) {
@@ -146,12 +141,12 @@ function highlighter (className, needsRemoval) {
             }
         });
     });
-};
+}
 
-function highlighterRemover (className) {
+function highlighterRemover(className) {
     className.forEach((button) => {
         button.classList.remove("active");
     });
-};
+}
 
 // window.onload = intializer();

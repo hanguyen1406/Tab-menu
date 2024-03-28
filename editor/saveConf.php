@@ -7,7 +7,6 @@ $jsonData = json_decode($jsonData, true);
 $noli = $jsonData['noli'];
 $data = $jsonData['tabCt'];
 
-
 try {
     $conn = new mysqli($servername, $username, $password, $database);
 

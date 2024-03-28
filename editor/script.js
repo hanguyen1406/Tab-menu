@@ -159,7 +159,7 @@ function addEventForItem2() {
             var result = confirm("Chắc chắn xóa?");
             if (result) {
                 var li = $(this).closest("li");
-                li.attr("id").slice(1);
+                var id = li.attr("id").slice(1);
                 await deleteEbook(id);
                 li.remove();
             }
@@ -205,14 +205,17 @@ async function addEventOpenBook() {
                 var id = $(this).attr("id").slice(1);
                 await connSql(id);
                 currentEbook = $(this).attr("id").slice(1);
-                $("#book-body").html(
+                await $("#book-body").html(
                     `<a>${i + 1}. ${$(this).children("a").html()}</a>${html}`
                 );
+
+                var tabct = document.querySelector(".tab-content");
+                observer1.observe(tabct, config);
+                initEbookEditor();
+                addEventForEbook();
             } catch (error) {
-                console.log("Khong co ebook nay");
+                console.log("error:", error);
             }
-            var tabct = document.querySelector(".tab-content");
-            observer1.observe(tabct, config);
         });
     });
 }
